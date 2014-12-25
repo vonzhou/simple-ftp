@@ -21,16 +21,15 @@ struct packet* ntohp(struct packet* np)
 	return hp;	
 }
 
-// 这里写的有问题！！！！
 struct packet* htonp(struct packet* hp)
 {
 	struct packet* np = (struct packet*) malloc(size_packet);
 	memset(np, 0, size_packet);
 	
-	np->conid = ntohs(hp->conid);
-	np->type = ntohs(hp->type);
-	np->comid = ntohs(hp->comid);
-	np->datalen = ntohs(hp->datalen);
+	np->conid = htons(hp->conid);
+	np->type = htons(hp->type);
+	np->comid = htons(hp->comid);
+	np->datalen = htons(hp->datalen);
 	memcpy(np->buffer, hp->buffer, LENBUFFER);
 	
 	return np;
