@@ -6,6 +6,8 @@ void send_EOT(struct packet* hp, struct packet* data, int sfd)
 {
 	int x;
 	hp->type = EOT;
+    hp->datalen = 0;
+    memset(hp->buffer, '\0', sizeof(char) *LENBUFFER);
 	data = htonp(hp);
 	if((x = send(sfd, data, size_packet, 0)) != size_packet)
 		er("send()", x);
@@ -49,7 +51,7 @@ void receive_file(struct packet* hp, struct packet* data, int sfd, FILE* f)
 		er("recv()", x);
 	j++;
 	hp = ntohp(data);
-	//printpacket(hp, HP);
+	printpacket(hp, HP);
 	// 当在数据传输的时候 type字段会用来标示是否
 	while(hp->type == DATA)
 	{
@@ -59,7 +61,7 @@ void receive_file(struct packet* hp, struct packet* data, int sfd, FILE* f)
 			er("recv()", x);
 		j++;
 		hp = ntohp(data);
-		//printpacket(hp, HP);
+		printpacket(hp, HP);
 	}
 	fprintf(stderr, "\t%d data packet(s) received.\n", --j);	// j decremented because the last packet is EOT.
 	fprintf(stderr, "\t%d byte(s) written.\n", i);

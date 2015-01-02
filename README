@@ -8,7 +8,7 @@ and I do some amendment and improvment.
 
 ----------------
 1. commons.c : htonp(...)
-
+2. sendEOT的时候先清空缓冲区，以免传输上次传输的数据
 
 
 
